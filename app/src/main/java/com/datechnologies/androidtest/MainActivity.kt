@@ -1,8 +1,8 @@
 package com.datechnologies.androidtest
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.datechnologies.androidtest.animation.AnimationActivity
 import com.datechnologies.androidtest.chat.ChatActivity
 import com.datechnologies.androidtest.login.LoginActivity

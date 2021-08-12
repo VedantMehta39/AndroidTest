@@ -4,9 +4,12 @@ package com.datechnologies.androidtest.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.datechnologies.androidtest.MainActivity
 import com.datechnologies.androidtest.R
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 
 
 /**
@@ -23,13 +26,20 @@ class LoginActivity : AppCompatActivity() {
         val actionBar = supportActionBar!!
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
-
+//        val vm: LoginViewModel by viewModels()
         // TODO: Make the UI look like it does in the mock-up. Allow for horizontal screen rotation.
         // TODO: Add a ripple effect when the buttons are clicked
         // TODO: Save screen state on screen rotation, inputted username and password should not disappear on screen rotation
 
+//        vm.login(username, password).observe(this, { result ->
+//            when(result){
+//                is Ok ->{}
+//                is Err -> {}
+//            }
+//        })
         // TODO: Send 'email' and 'password' to http://dev.rapptrlabs.com/Tests/scripts/login.php
         // TODO: as FormUrlEncoded parameters.
+
 
         // TODO: When you receive a response from the login endpoint, display an AlertDialog.
         // TODO: The AlertDialog should display the 'code' and 'message' that was returned by the endpoint.
