@@ -56,11 +56,6 @@ class ChatActivity : AppCompatActivity() {
         })
 
         // Could listen for errors and do something about them like showing a oh no message!
-
-        // TODO: Make the UI look like it does in the mock-up. Allow for horizontal screen rotation.
-
-        // TODO: Retrieve the chat data from http://dev.rapptrlabs.com/Tests/scripts/chat_log.php
-        // TODO: Parse this chat data from JSON into ChatLogMessageModel and display it.
     }
 
     override fun onBackPressed() {
