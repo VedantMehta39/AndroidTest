@@ -46,11 +46,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation("com.michael-bull.kotlin-result:kotlin-result:1.1.12")
 
-    // Koin main features for Android (Scope,ViewModel ...)
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation "io.insert-koin:koin-android:3.1.2"
-    // Koin test features
-    testImplementation "io.insert-koin:koin-test:3.1.2"
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    testImplementation "io.mockk:mockk:1.12.0"
     testImplementation 'junit:junit:4.12'
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
