@@ -4,14 +4,16 @@ package com.datechnologies.androidtest.chat
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.datechnologies.androidtest.MainActivity
 import com.datechnologies.androidtest.R
-import com.datechnologies.androidtest.api.ChatLogMessageModel
-import java.util.*
+import com.datechnologies.androidtest.api.chatmessage.ChatLogMessageModel
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 
 
 /**
@@ -21,8 +23,10 @@ class ChatActivity : AppCompatActivity() {
     //==============================================================================================
     // Class Properties
     //==============================================================================================
-    private var recyclerView: RecyclerView? = null
-    private var chatAdapter: ChatAdapter? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var chatAdapter: ChatAdapter
+
+
 
     //==============================================================================================
     // Lifecycle Methods
@@ -30,27 +34,28 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-        recyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
-        val actionBar = supportActionBar!!
-        actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.setDisplayShowHomeEnabled(true)
+        setTitle(R.string.chat_title)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
         chatAdapter = ChatAdapter()
-        recyclerView!!.adapter = chatAdapter
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(applicationContext,
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
+            adapter = chatAdapter
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(
+                applicationContext,
                 LinearLayoutManager.VERTICAL,
-                false)
-        val tempList: MutableList<ChatLogMessageModel> = ArrayList()
-        val chatLogMessageModel = ChatLogMessageModel(message = "This is test data. Please retrieve real data.")
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        tempList.add(chatLogMessageModel)
-        chatAdapter!!.setChatLogMessageModelList(tempList)
+                false
+            )
+        }
+        val vm: ChatViewModel by viewModels()
+        vm.getAllMessages()
+        vm.messages.observe(this, {
+            chatAdapter.setChatLogMessageModelList(it)
+        })
+
+        // Could listen for errors and do something about them like showing a oh no message!
 
         // TODO: Make the UI look like it does in the mock-up. Allow for horizontal screen rotation.
 
@@ -61,6 +66,15 @@ class ChatActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (it.itemId) {
+                android.R.id.home -> onBackPressed()
+            }
+        }
+        return true
     }
 
     companion object {
