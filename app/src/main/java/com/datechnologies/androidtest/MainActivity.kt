@@ -1,5 +1,7 @@
 package com.datechnologies.androidtest
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -51,5 +53,15 @@ class MainActivity : AppCompatActivity() {
 
     fun onAnimationClicked(v: View?) {
         AnimationActivity.start(this)
+    }
+
+    companion object {
+        //==============================================================================================
+        // Static Class Methods
+        //==============================================================================================
+        fun start(context: Context) {
+            val starter = Intent(context,  MainActivity::class.java)
+            context.startActivity(starter)
+        }
     }
 }
